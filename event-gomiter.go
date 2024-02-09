@@ -24,7 +24,10 @@ type ChannelEventEmitter struct {
 var _ EventEmitter = (*ChannelEventEmitter)(nil)
 
 func NewChannelEventEmitter() *ChannelEventEmitter {
-	emitter := new(ChannelEventEmitter)
+	emitter := &ChannelEventEmitter{
+		channels: make(map[EventIdentifier]chan Event),
+		handlers: make(map[EventIdentifier][]EventHandler),
+	}
 
 	go func() {
 		for {
